@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Botão com Timeout Idempotente (Popup)</title>
+  <style>
+    .popup {
+      display: none; 
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="meuBotao" onclick="executarAcao()">Chamar elevador</button>
+
+  <div id="popup" class="popup">
+    <p id="popupMessage"></p>
+  </div>
+
+  <script>
+    let timeoutId = null;
+    let isActionPending = false;
+
+    function executarAcao() {
+      if (isActionPending) {
+        return; // Não faz nada se a ação já estiver pendente
+      }
+    
+      isActionPending = true;
+      document.getElementById("popupMessage").textContent = "Elevador a caminho!";
+      document.getElementById("popup").style.display = "block"; // Mostra o popup apenas uma vez
+    
+      timeoutId = setTimeout(() => {
+        isActionPending = false;
+        document.getElementById("popup").style.display = "none"; // Esconde o popup após o timeout
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
